@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { foodApi, drinkApi } from '../services/foodAndDrinkApi';
 import { RecipesContext } from '../context/RecipesContext';
 
@@ -7,15 +7,36 @@ function SearchBar() {
   const [searchParam, setSearchParam] = useState('');
   const [searchValue, setSearchValue] = useState('');
   const { setSearchResults } = useContext(RecipesContext);
+  const history = useHistory();
   const location = useLocation();
 
   const searchApi = async () => {
     if (location.pathname === '/foods') {
-      console.log(searchParam, searchValue);
-      setSearchResults(await foodApi(searchParam, searchValue));
+      const apiResult = await foodApi(searchParam, searchValue);
+      setSearchResults(apiResult);
+      if (!apiResult) {
+        global.alert('Sorry, we haven\'t found any recipes for these filters.');
+        setSearchResults([]);
+      } else if (apiResult.length === 1) {
+        history.push(`/foods/${apiResult[0].idMeal}`);
+      }
     } else {
-      setSearchResults(await drinkApi(searchParam, searchValue));
+      const apiResult = await drinkApi(searchParam, searchValue);
+      setSearchResults(apiResult);
+      if (!apiResult) {
+        global.alert('Sorry, we haven\'t found any recipes for these filters.');
+        setSearchResults([]);
+      } else if (apiResult.length === 1) {
+        history.push(`/drinks/${apiResult[0].idDrink}`);
+      }
     }
+  };
+
+  const handleClick = () => {
+    if (searchParam === 'f' && searchValue.length > 1) {
+      return global.alert('Your search must have only 1 (one) character');
+    }
+    searchApi();
   };
 
   return (
@@ -59,7 +80,7 @@ function SearchBar() {
           First Letter
         </label>
       </div>
-      <button data-testid="exec-search-btn" type="button" onClick={ searchApi }>
+      <button data-testid="exec-search-btn" type="button" onClick={ handleClick }>
         Search
       </button>
     </section>
