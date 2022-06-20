@@ -14,6 +14,7 @@ function Header({ title }) {
         data-testid="profile-top-btn"
         type="button"
         onClick={ () => history.push('/profile') }
+        src={ profileIcon }
       >
         <img src={ profileIcon } alt="Profile Icon" />
       </button>
@@ -24,6 +25,7 @@ function Header({ title }) {
         data-testid="search-top-btn"
         type="button"
         onClick={ () => setToggle(!toggle) }
+        src={ searchIcon }
       >
         <img src={ searchIcon } alt="Profile Icon" />
       </button>
