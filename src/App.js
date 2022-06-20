@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Foods from './pages/Foods';
 import Profile from './pages/Profile';
 import Drinks from './pages/Drinks';
+import RecipeDetails from './pages/RecipeDetails';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Route exact path="/foods" component={ Foods } />
       <Route exact path="/drinks" component={ Drinks } />
       <Route exact path="/profile" component={ Profile } />
+      <Route path="/foods/:id-da-receita" render={ () => <RecipeDetails /> } />
     </Switch>
   );
 }
