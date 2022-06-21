@@ -6,7 +6,7 @@ import { RecipesContext } from '../context/RecipesContext';
 function FilterButtons({ page }) {
   const [categoryArr, setCategoryArr] = useState([]);
   const [toggleFilter, setToggleFilter] = useState();
-  const { setSearchResults } = useContext(RecipesContext);
+  const { setFilteredResults } = useContext(RecipesContext);
   const maxCatgory = 5;
   useEffect(() => {
     async function fetchCategory() {
@@ -27,14 +27,16 @@ function FilterButtons({ page }) {
     }
   }, [categoryArr]);
 
-  const handleClick = async ({ value }) => {
-    setToggleFilter((prevState) => ({
-      ...toggleFilter,
-      [value]: !prevState.value,
-    }));
-    setSearchResults(
-      await fetchByCategory(page, value),
-    );
+  const handleClick = async ({ value }, teste) => {
+    if (toggleFilter[value]) {
+      setFilteredResults([]);
+    } else {
+      setFilteredResults(
+        await fetchByCategory(page, value),
+      );
+    }
+
+    setToggleFilter({ ...toggleFilter, [value]: teste });
   };
   console.log(toggleFilter);
 
@@ -46,11 +48,18 @@ function FilterButtons({ page }) {
           type="button"
           key={ i }
           value={ category.strCategory }
-          onClick={ ({ target }) => handleClick(target) }
+          onClick={ ({ target }) => handleClick(target, !toggleFilter[target.value]) }
         >
           {category.strCategory}
         </button>
       ))}
+      <button
+        data-testid="All-category-filter"
+        type="button"
+        onClick={ () => setFilteredResults([]) }
+      >
+        All
+      </button>
     </div>
   );
 }
