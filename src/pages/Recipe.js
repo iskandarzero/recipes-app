@@ -16,13 +16,13 @@ function Recipe() {
       { isFood && (
         <>
           <FoodDetail id={ id } />
-          <FoodRecomendation />
+          <DrinkRecomendation />
         </>
       )}
       {isDrink && (
         <>
           <DrinkDetail id={ id } />
-          <DrinkRecomendation />
+          <FoodRecomendation />
         </>
       )}
     </div>
