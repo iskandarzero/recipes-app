@@ -5,7 +5,7 @@
 }
 
 body {
-  width: 500px;
+  width: min(500px, 100vw);
   margin: auto;
   word-wrap: break-word;
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import '../styles/recomendation.scss';
 
 function DrinkRecomendation() {
   const [drinks, setDrinks] = useState([]);
@@ -16,9 +17,13 @@ function DrinkRecomendation() {
   }, []);
 
   return (
-    <div>
+    <div id="recomendation">
       { drinks.map((drink, index) => (
-        <div key={ drink.idDrink } data-testid={ `${index}-recomendation-card` }>
+        <div
+          className="recomendation-card"
+          key={ drink.idDrink }
+          data-testid={ `${index}-recomendation-card` }
+        >
           <img
             src={ drink.strDrinkThumb }
             alt={ drink.strDrink }

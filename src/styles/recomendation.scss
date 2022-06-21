@@ -1,0 +1,12 @@
+#recomendation {
+  display: flex;
+  gap: 10px;
+  overflow: hidden;
+
+  .recomendation-card {
+
+    img {
+      width: 200px;
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import '../styles/recomendation.scss';
 
 function FoodRecomendation() {
   const [foods, setFoods] = useState([]);
@@ -16,9 +17,13 @@ function FoodRecomendation() {
   }, []);
 
   return (
-    <div>
+    <div id="recomendation">
       { foods.map((food, index) => (
-        <div key={ food.idMeal } data-testid={ `${index}-recomendation-card` }>
+        <div
+          className="recomendation-card"
+          key={ food.idMeal }
+          data-testid={ `${index}-recomendation-card` }
+        >
           <img
             src={ food.strMealThumb }
             alt={ food.strMeal }
