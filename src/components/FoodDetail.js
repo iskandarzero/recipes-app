@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import '../styles/detail.scss';
 
 function FoodDetail({ id }) {
   const [foods, setFoods] = useState([]);
@@ -35,7 +36,7 @@ function FoodDetail({ id }) {
   const mesures = filterdMesures();
 
   return (
-    <div>
+    <div id="detail-page">
       { foods.map((food) => (
         <div key={ food.idMeal }>
           <img
@@ -66,7 +67,13 @@ function FoodDetail({ id }) {
         </div>
       ))}
 
-      <button data-testid="start-recipe-btn" type="button">Start Recipe</button>
+      <button
+        id="start-btn"
+        data-testid="start-recipe-btn"
+        type="button"
+      >
+        Start Recipe
+      </button>
     </div>
   );
 }
