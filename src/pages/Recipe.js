@@ -2,6 +2,8 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import FoodDetail from '../components/FoodDetail';
 import DrinkDetail from '../components/DrinkDetail';
+import DrinkRecomendation from '../components/DrinkRecomendation';
+import FoodRecomendation from '../components/FoodRecomendation';
 
 function Recipe() {
   const { pathname } = useLocation();
@@ -11,8 +13,18 @@ function Recipe() {
 
   return (
     <div>
-      {isFood && <FoodDetail id={ id } />}
-      {isDrink && <DrinkDetail id={ id } />}
+      { isFood && (
+        <>
+          <FoodDetail id={ id } />
+          <FoodRecomendation />
+        </>
+      )}
+      {isDrink && (
+        <>
+          <DrinkDetail id={ id } />
+          <DrinkRecomendation />
+        </>
+      )}
     </div>
   );
 }

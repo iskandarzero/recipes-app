@@ -61,7 +61,6 @@ function DrinkDetail({ id }) {
         </div>
       ))}
       <button data-testid="start-recipe-btn" type="button">Start Recipe</button>
-      <p data-testid="0-recomendation-card">Recomendação</p>
     </div>
   );
 }
