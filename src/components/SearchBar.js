@@ -13,21 +13,25 @@ function SearchBar() {
   const searchApi = async () => {
     if (location.pathname === '/foods') {
       const apiResult = await foodApi(searchParam, searchValue);
-      setSearchResults(apiResult);
       if (!apiResult) {
         global.alert('Sorry, we haven\'t found any recipes for these filters.');
         setSearchResults([]);
       } else if (apiResult.length === 1) {
+        setSearchResults(apiResult);
         history.push(`/foods/${apiResult[0].idMeal}`);
+      } else {
+        setSearchResults(apiResult);
       }
     } else {
       const apiResult = await drinkApi(searchParam, searchValue);
-      setSearchResults(apiResult);
       if (!apiResult) {
         global.alert('Sorry, we haven\'t found any recipes for these filters.');
         setSearchResults([]);
       } else if (apiResult.length === 1) {
+        setSearchResults(apiResult);
         history.push(`/drinks/${apiResult[0].idDrink}`);
+      } else {
+        setSearchResults(apiResult);
       }
     }
   };
