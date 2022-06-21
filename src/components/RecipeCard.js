@@ -14,14 +14,10 @@ function RecipeCard() {
         <div data-testid={ `${index}-recipe-card` } key={ index }>
           <img
             data-testid={ `${index}-card-img` }
-            src={ recipe.strMealThumb || recipe.strDrinkThumb }
-            alt={ recipe.strMeal || recipe.strDrink }
+            src={ recipe.strMealThumb }
+            alt={ recipe.strMeal }
           />
-          <h3
-            data-testid={ `${index}-card-name` }
-          >
-            {recipe.strMeal || recipe.strDrink}
-          </h3>
+          <h3 data-testid={ `${index}-card-name` }>{recipe.strMeal}</h3>
         </div>
       ))}
     </main>
