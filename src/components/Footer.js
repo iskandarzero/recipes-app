@@ -9,7 +9,7 @@ function Footer() {
   const history = useHistory();
 
   return (
-    <footer id="footer" data-testid="footer">
+    <footer className="footer" data-testid="footer">
       <button
         type="button"
         data-testid="drinks-bottom-btn"
