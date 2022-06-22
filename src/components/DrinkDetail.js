@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import '../styles/detail.scss';
 import { useHistory } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
+import whiteHeart from '../images/whiteHeartIcon.svg';
+import blackHeart from '../images/blackHeartIcon.svg';
 
 function DrinkDetail({ id }) {
   const [drinks, setDrinks] = useState([]);
   const [copied, setCopied] = useState('');
+  const [favorite, setFavorite] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -19,6 +22,15 @@ function DrinkDetail({ id }) {
     };
     getDrink();
   }, [id]);
+
+  useEffect(() => {
+    const favoriteRecipes = localStorage.getItem('favoriteRecipes');
+    if (favoriteRecipes && drinks[0]) {
+      setFavorite(JSON.parse(favoriteRecipes)
+        .map((recipe) => recipe.id)
+        .includes(drinks[0].idDrink));
+    }
+  }, [drinks]);
 
   function filterdIngredients() {
     if (drinks[0]) {
@@ -53,6 +65,32 @@ function DrinkDetail({ id }) {
     }
   }
 
+  function deleteFavorite() {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const newFavorites = favoriteRecipes
+      .filter((recipe) => recipe.id !== drinks[0].idDrink);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
+    setFavorite(false);
+  }
+
+  function addFavorite() {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const newRecipe = {
+      id: drinks[0].idDrink,
+      type: 'drink',
+      nationality: '',
+      category: drinks[0].strCategory,
+      alcoholicOrNot: drinks[0].strAlcoholic,
+      name: drinks[0].strDrink,
+      image: drinks[0].strDrinkThumb,
+    };
+    if (favoriteRecipes) {
+      localStorage.setItem('favoriteRecipes', JSON
+        .stringify([...favoriteRecipes, newRecipe]));
+    } else localStorage.setItem('favoriteRecipes', JSON.stringify([newRecipe]));
+    setFavorite(true);
+  }
+
   function handleShareBtn() {
     setCopied('Link copied!');
     navigator.clipboard.writeText(window.location.href);
@@ -77,7 +115,29 @@ function DrinkDetail({ id }) {
             <img src={ shareIcon } alt="share icon" />
             { copied }
           </button>
-          <button data-testid="favorite-btn" type="button">Favorite</button>
+
+          {!favorite && (
+            <button
+              data-testid="favorite-btn"
+              type="button"
+              src={ whiteHeart }
+              onClick={ addFavorite }
+            >
+              <img src={ whiteHeart } alt="white heart icon" />
+            </button>
+          )}
+
+          {favorite && (
+            <button
+              data-testid="favorite-btn"
+              type="button"
+              src={ blackHeart }
+              onClick={ deleteFavorite }
+            >
+              <img src={ blackHeart } alt="black heart icon" />
+            </button>
+          )}
+
           <p data-testid="recipe-category">{ drink.strAlcoholic }</p>
           <div>
             { ingredients.map((ingredient, index) => (

@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import '../styles/detail.scss';
 import { useHistory } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
+import whiteHeart from '../images/whiteHeartIcon.svg';
+import blackHeart from '../images/blackHeartIcon.svg';
 
 function FoodDetail({ id }) {
   const [foods, setFoods] = useState([]);
   const [copied, setCopied] = useState('');
+  const [favorite, setFavorite] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -19,6 +22,15 @@ function FoodDetail({ id }) {
     };
     getFood();
   }, [id]);
+
+  useEffect(() => {
+    const favoriteRecipes = localStorage.getItem('favoriteRecipes');
+    if (favoriteRecipes && foods[0]) {
+      setFavorite(JSON.parse(favoriteRecipes)
+        .map((recipe) => recipe.id)
+        .includes(foods[0].idMeal));
+    }
+  }, [foods]);
 
   function filterdIngredients() {
     if (foods[0]) {
@@ -53,6 +65,32 @@ function FoodDetail({ id }) {
     }
   }
 
+  function deleteFavorite() {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const newFavorites = favoriteRecipes
+      .filter((recipe) => recipe.id !== foods[0].idMeal);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
+    setFavorite(false);
+  }
+
+  function addFavorite() {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const newRecipe = {
+      id: foods[0].idMeal,
+      type: 'food',
+      nationality: foods[0].strArea,
+      category: foods[0].strCategory,
+      alcoholicOrNot: '',
+      name: foods[0].strMeal,
+      image: foods[0].strMealThumb,
+    };
+    if (favoriteRecipes) {
+      localStorage.setItem('favoriteRecipes', JSON
+        .stringify([...favoriteRecipes, newRecipe]));
+    } else localStorage.setItem('favoriteRecipes', JSON.stringify([newRecipe]));
+    setFavorite(true);
+  }
+
   function handleShareBtn() {
     setCopied('Link copied!');
     navigator.clipboard.writeText(window.location.href);
@@ -77,7 +115,29 @@ function FoodDetail({ id }) {
             <img src={ shareIcon } alt="share icon" />
             { copied }
           </button>
-          <button data-testid="favorite-btn" type="button">Favorite</button>
+
+          {!favorite && (
+            <button
+              data-testid="favorite-btn"
+              type="button"
+              src={ whiteHeart }
+              onClick={ addFavorite }
+            >
+              <img src={ whiteHeart } alt="white heart icon" />
+            </button>
+          )}
+
+          {favorite && (
+            <button
+              data-testid="favorite-btn"
+              type="button"
+              src={ blackHeart }
+              onClick={ deleteFavorite }
+            >
+              <img src={ blackHeart } alt="black heart icon" />
+            </button>
+          )}
+
           <p data-testid="recipe-category">{ food.strCategory }</p>
           <div>
             { ingredients.map((ingredient, index) => (
