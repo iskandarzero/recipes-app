@@ -32,6 +32,15 @@ function DrinkDetail({ id }) {
     }
   }
 
+  function isDoneRecipe() {
+    const recipeData = localStorage.getItem('doneRecipes');
+    if (recipeData && drinks[0]) {
+      return JSON.parse(recipeData)
+        .map((recipe) => recipe.id)
+        .includes(drinks[0].idDrink);
+    }
+  }
+
   const ingredients = filterdIngredients();
   const mesures = filterdMesures();
 
@@ -61,13 +70,15 @@ function DrinkDetail({ id }) {
           <p data-testid="instructions">{drink.strInstructions}</p>
         </div>
       ))}
-      <button
-        id="start-btn"
-        data-testid="start-recipe-btn"
-        type="button"
-      >
-        Start Recipe
-      </button>
+      { !isDoneRecipe() && (
+        <button
+          id="start-btn"
+          data-testid="start-recipe-btn"
+          type="button"
+        >
+          Start Recipe
+        </button>
+      )}
     </div>
   );
 }

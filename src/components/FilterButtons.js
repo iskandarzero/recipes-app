@@ -38,7 +38,6 @@ function FilterButtons({ page }) {
 
     setToggleFilter({ ...toggleFilter, [value]: teste });
   };
-  console.log(toggleFilter);
 
   return categoryArr.length > 0 && (
     <div>
