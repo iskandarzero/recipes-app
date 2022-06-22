@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import '../styles/detail.scss';
+import { useHistory } from 'react-router-dom';
+import shareIcon from '../images/shareIcon.svg';
 
 function FoodDetail({ id }) {
   const [foods, setFoods] = useState([]);
+  const [copied, setCopied] = useState('');
+  const history = useHistory();
 
   useEffect(() => {
     const getFood = async () => {
@@ -32,17 +36,32 @@ function FoodDetail({ id }) {
     }
   }
 
-  function isDoneRecipe() {
-    const recipeData = localStorage.getItem('doneRecipes');
-    if (recipeData && foods[0]) {
-      return JSON.parse(recipeData)
+  function isRecipeDone() {
+    const doneRecipes = localStorage.getItem('doneRecipes');
+    if (doneRecipes && foods[0]) {
+      return JSON.parse(doneRecipes)
         .map((recipe) => recipe.id)
         .includes(foods[0].idMeal);
     }
   }
 
+  function isRecipeInProgress() {
+    const inProgressRecipes = localStorage.getItem('inProgressRecipes');
+    if (inProgressRecipes && foods[0]) {
+      return Object.keys(JSON.parse(inProgressRecipes)?.meals)
+        .includes(foods[0].idMeal);
+    }
+  }
+
+  function handleShareBtn() {
+    setCopied('Link copied!');
+    navigator.clipboard.writeText(window.location.href);
+  }
+
   const ingredients = filterdIngredients();
   const mesures = filterdMesures();
+  const recipeDone = isRecipeDone();
+  const recipeInProgress = isRecipeInProgress();
 
   return (
     <div id="detail-page">
@@ -54,7 +73,10 @@ function FoodDetail({ id }) {
             alt={ food.strMeal }
           />
           <h1 data-testid="recipe-title">{ food.strMeal }</h1>
-          <button data-testid="share-btn" type="button">Share</button>
+          <button data-testid="share-btn" type="button" onClick={ handleShareBtn }>
+            <img src={ shareIcon } alt="share icon" />
+            { copied }
+          </button>
           <button data-testid="favorite-btn" type="button">Favorite</button>
           <p data-testid="recipe-category">{ food.strCategory }</p>
           <div>
@@ -76,13 +98,15 @@ function FoodDetail({ id }) {
         </div>
       ))}
 
-      { !isDoneRecipe() && (
+      { !recipeDone && (
         <button
           id="start-btn"
           data-testid="start-recipe-btn"
           type="button"
+          onClick={ () => history.push(`/foods/${id}/in-progress`) }
         >
-          Start Recipe
+          { recipeInProgress && 'Continue Recipe' }
+          { !recipeInProgress && 'Start Recipe' }
         </button>
       )}
     </div>
