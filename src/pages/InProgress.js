@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import FavoriteBtn from '../components/FavoriteBtn';
 import ShareBtn from '../components/ShareBtn';
 
 function InProgress({ match: { params: { id } } }) {
   const location = useLocation();
+  const history = useHistory();
   const [recipe, setRecipe] = useState([]);
   const [progress, setProgress] = useState([]);
 
@@ -102,14 +103,9 @@ function InProgress({ match: { params: { id } } }) {
   const checkIgredients = () => {
     if (progress) {
       const maxCharacters = 13;
-      let filteredIgredients = [];
-      if (location.pathname.includes('foods')) {
-        filteredIgredients = ingredients
-          .filter((ingredient) => recipe[ingredient] !== '');
-      } else {
-        filteredIgredients = ingredients
-          .filter((ingredient) => recipe[ingredient] !== null);
-      }
+      const filteredIgredients = ingredients
+        .filter((ingredient) => recipe[ingredient] !== '')
+        .filter((ingredient) => recipe[ingredient] !== null);
       progress.sort((a, b) => Number(a
         .slice(maxCharacters)) - Number(b.slice(maxCharacters)));
       const equals = JSON.stringify(progress) === JSON.stringify(filteredIgredients);
@@ -156,6 +152,7 @@ function InProgress({ match: { params: { id } } }) {
         data-testid="finish-recipe-btn"
         type="button"
         disabled={ checkIgredients() }
+        onClick={ () => history.push('/done-recipes') }
       >
         Finish recipe!
       </button>
