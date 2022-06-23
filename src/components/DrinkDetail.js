@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import '../styles/detail.scss';
+import { useHistory } from 'react-router-dom';
+import ShareButton from './ShareBtn';
+import FavoriteBtn from './FavoriteBtn';
 
 function DrinkDetail({ id }) {
   const [drinks, setDrinks] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     const getDrink = async () => {
@@ -32,17 +36,27 @@ function DrinkDetail({ id }) {
     }
   }
 
-  function isDoneRecipe() {
-    const recipeData = localStorage.getItem('doneRecipes');
-    if (recipeData && drinks[0]) {
-      return JSON.parse(recipeData)
+  function isRecipeDone() {
+    const doneRecipes = localStorage.getItem('doneRecipes');
+    if (doneRecipes && drinks[0]) {
+      return JSON.parse(doneRecipes)
         .map((recipe) => recipe.id)
+        .includes(drinks[0].idDrink);
+    }
+  }
+
+  function isRecipeInProgress() {
+    const inProgressRecipes = localStorage.getItem('inProgressRecipes');
+    if (inProgressRecipes && drinks[0]) {
+      return Object.keys(JSON.parse(inProgressRecipes)?.cocktails)
         .includes(drinks[0].idDrink);
     }
   }
 
   const ingredients = filterdIngredients();
   const mesures = filterdMesures();
+  const recipeDone = isRecipeDone();
+  const recipeInProgress = isRecipeInProgress();
 
   return (
     <div id="detail-page">
@@ -54,8 +68,8 @@ function DrinkDetail({ id }) {
             alt={ drink.strDrink }
           />
           <h1 data-testid="recipe-title">{ drink.strDrink }</h1>
-          <button data-testid="share-btn" type="button">Share</button>
-          <button data-testid="favorite-btn" type="button">Favorite</button>
+          <ShareButton />
+          { drinks.length > 0 && <FavoriteBtn recipe={ drinks[0] } /> }
           <p data-testid="recipe-category">{ drink.strAlcoholic }</p>
           <div>
             { ingredients.map((ingredient, index) => (
@@ -70,13 +84,15 @@ function DrinkDetail({ id }) {
           <p data-testid="instructions">{drink.strInstructions}</p>
         </div>
       ))}
-      { !isDoneRecipe() && (
+      { !recipeDone && (
         <button
           id="start-btn"
           data-testid="start-recipe-btn"
           type="button"
+          onClick={ () => history.push(`/drinks/${id}/in-progress`) }
         >
-          Start Recipe
+          { recipeInProgress && 'Continue Recipe' }
+          { !recipeInProgress && 'Start Recipe' }
         </button>
       )}
     </div>
