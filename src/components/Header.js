@@ -5,7 +5,7 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 
-function Header({ title }) {
+function Header({ title, search }) {
   const history = useHistory();
   const [toggle, setToggle] = useState(false);
 
@@ -22,22 +22,29 @@ function Header({ title }) {
 
       <h1 data-testid="page-title">{title}</h1>
 
-      <button
-        data-testid="search-top-btn"
-        type="button"
-        onClick={ () => setToggle(!toggle) }
-        src={ searchIcon }
-      >
-        <img src={ searchIcon } alt="Profile Icon" />
-      </button>
+      {search && (
+        <button
+          data-testid="search-top-btn"
+          type="button"
+          onClick={ () => setToggle(!toggle) }
+          src={ searchIcon }
+        >
+          <img src={ searchIcon } alt="Profile Icon" />
+        </button>
+      )}
+      { toggle && <SearchBar /> }
 
-      {toggle && <SearchBar />}
     </header>
   );
 }
 
 Header.propTypes = {
   title: PropTypes.string.isRequired,
+  search: PropTypes.bool,
+};
+
+Header.defaultProps = {
+  search: true,
 };
 
 export default Header;
