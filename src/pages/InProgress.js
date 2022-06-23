@@ -135,7 +135,6 @@ function InProgress({ match: { params: { id } } }) {
       />
       <ShareBtn />
       <FavoriteBtn recipe={ recipe } />
-      <button data-testid="favorite-btn" type="button">Favorite</button>
       <p data-testid="recipe-category">{recipe.strCategory}</p>
       {ingredients.map((ingredient, index) => (recipe[ingredient] && (
         <div key={ index }>

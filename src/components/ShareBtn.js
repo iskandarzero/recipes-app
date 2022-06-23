@@ -6,7 +6,7 @@ function ShareButton() {
 
   function handleShareBtn() {
     setCopied('Link copied!');
-    navigator.clipboard.writeText(window.location.href);
+    navigator.clipboard.writeText(window.location.href.replace('/in-progress', ''));
   }
 
   return (
