@@ -71,11 +71,16 @@ function InProgress({ match: { params: { id } } }) {
   };
 
   const checkIgredients = () => {
-    const filteredIgredients = ingredients
-      .filter((ingredient) => recipe[ingredient] !== null);
-    progress.sort();
-    const equals = JSON.stringify(progress) === JSON.stringify(filteredIgredients);
-    return !equals;
+    if (progress) {
+      const maxCharacters = 13;
+      const filteredIgredients = ingredients
+        .filter((ingredient) => recipe[ingredient] !== '');
+      progress.sort((a, b) => Number(a
+        .slice(maxCharacters)) - Number(b.slice(maxCharacters)));
+      const equals = JSON.stringify(progress) === JSON.stringify(filteredIgredients);
+      return !equals;
+    }
+    return true;
   };
 
   return (
