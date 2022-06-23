@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
+import FavoriteBtn from '../components/FavoriteBtn';
+import ShareBtn from '../components/ShareBtn';
 
 function InProgress({ match: { params: { id } } }) {
   const location = useLocation();
@@ -131,7 +133,8 @@ function InProgress({ match: { params: { id } } }) {
         src={ recipe.strMealThumb || recipe.strDrinkThumb }
         alt={ recipe.strMeal || recipe.strDrink }
       />
-      <button data-testid="share-btn" type="button">Share</button>
+      <ShareBtn />
+      <FavoriteBtn recipe={ recipe } />
       <button data-testid="favorite-btn" type="button">Favorite</button>
       <p data-testid="recipe-category">{recipe.strCategory}</p>
       {ingredients.map((ingredient, index) => (recipe[ingredient] && (
