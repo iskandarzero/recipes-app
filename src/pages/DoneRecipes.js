@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 // import PropTypes from 'prop-types';
 
@@ -29,6 +30,7 @@ function DoneRecipes() {
   return (
     <>
       <header>
+        <Header title="Done Recipes" search={ false } />
         <button
           type="button"
           data-testid="filter-by-all-btn"
