@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import FavoriteBtn from '../components/FavoriteBtn';
+import ShareBtn from '../components/ShareBtn';
 
 function InProgress({ match: { params: { id } } }) {
   const location = useLocation();
+  const history = useHistory();
   const [recipe, setRecipe] = useState([]);
   const [progress, setProgress] = useState([]);
 
@@ -35,24 +38,51 @@ function InProgress({ match: { params: { id } } }) {
     getRecipe();
   }, [id]);
 
+  const foodId = (ingredient) => {
+    const progressArr = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (Object.keys(progressArr.meals).includes(id)) {
+      if (progressArr.meals[id].includes(ingredient)) {
+        setProgress(JSON.parse(localStorage.getItem('inProgressRecipes')).meals[id]);
+      } else {
+        progressArr.meals[id] = [...progressArr.meals[id], ingredient];
+      }
+    } else {
+      progressArr.meals = {
+        ...progressArr.meals,
+        [id]: [ingredient],
+      };
+    }
+
+    localStorage.setItem('inProgressRecipes', JSON.stringify(progressArr));
+    setProgress(JSON.parse(localStorage.getItem('inProgressRecipes')).meals[id]);
+  };
+
+  const drinkId = (ingredient) => {
+    const progressArr = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (Object.keys(progressArr.cocktails).includes(id)) {
+      if (progressArr.cocktails[id].includes(ingredient)) {
+        setProgress(JSON.parse(localStorage.getItem('inProgressRecipes')).cocktails[id]);
+      } else {
+        progressArr.cocktails[id] = [...progressArr.cocktails[id], ingredient];
+      }
+    } else {
+      progressArr.cocktails = {
+        ...progressArr.cocktails,
+        [id]: [ingredient],
+      };
+    }
+
+    localStorage.setItem('inProgressRecipes', JSON.stringify(progressArr));
+    setProgress(JSON.parse(localStorage.getItem('inProgressRecipes')).cocktails[id]);
+  };
+
   const saveIngredient = (ingredient) => {
     if (localStorage.getItem('inProgressRecipes')) {
-      const progressArr = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      const param = location.pathname.includes('foods') ? 'meals' : 'cocktails';
       if (location.pathname.includes('foods')) {
-        if (Object.keys(progressArr.meals).includes(id)) {
-          progressArr.meals[id] = [...progressArr.meals[id], ingredient];
-        } else {
-          progressArr.meals = { [id]: [ingredient] };
-        }
-      } else if (Object.keys(progressArr.cocktails).includes(id)) {
-        progressArr.cocktails[id] = [...progressArr.cocktails[id], ingredient];
+        foodId(ingredient);
       } else {
-        progressArr.cocktails = { [id]: [ingredient] };
+        drinkId(ingredient);
       }
-
-      localStorage.setItem('inProgressRecipes', JSON.stringify(progressArr));
-      setProgress(JSON.parse(localStorage.getItem('inProgressRecipes'))[param][id]);
     } else if (location.pathname.includes('foods')) {
       const progressArr = {
         meals: { [id]: [ingredient] },
@@ -71,11 +101,24 @@ function InProgress({ match: { params: { id } } }) {
   };
 
   const checkIgredients = () => {
-    const filteredIgredients = ingredients
-      .filter((ingredient) => recipe[ingredient] !== null);
-    progress.sort();
-    const equals = JSON.stringify(progress) === JSON.stringify(filteredIgredients);
-    return !equals;
+    if (progress) {
+      const maxCharacters = 13;
+      const filteredIgredients = ingredients
+        .filter((ingredient) => recipe[ingredient] !== '')
+        .filter((ingredient) => recipe[ingredient] !== null);
+      progress.sort((a, b) => Number(a
+        .slice(maxCharacters)) - Number(b.slice(maxCharacters)));
+      const equals = JSON.stringify(progress) === JSON.stringify(filteredIgredients);
+      return !equals;
+    }
+    return true;
+  };
+
+  const checkboxChecked = (ingredient) => {
+    if (progress) {
+      return progress.includes(ingredient);
+    }
+    return false;
   };
 
   return (
@@ -86,8 +129,8 @@ function InProgress({ match: { params: { id } } }) {
         src={ recipe.strMealThumb || recipe.strDrinkThumb }
         alt={ recipe.strMeal || recipe.strDrink }
       />
-      <button data-testid="share-btn" type="button">Share</button>
-      <button data-testid="favorite-btn" type="button">Favorite</button>
+      <ShareBtn />
+      <FavoriteBtn recipe={ recipe } />
       <p data-testid="recipe-category">{recipe.strCategory}</p>
       {ingredients.map((ingredient, index) => (recipe[ingredient] && (
         <div key={ index }>
@@ -99,7 +142,7 @@ function InProgress({ match: { params: { id } } }) {
               type="checkbox"
               id={ ingredient }
               onChange={ () => saveIngredient(ingredient) }
-              checked={ progress.includes(ingredient) }
+              checked={ checkboxChecked(ingredient) }
             />
             {recipe[ingredient]}
           </label>
@@ -109,6 +152,7 @@ function InProgress({ match: { params: { id } } }) {
         data-testid="finish-recipe-btn"
         type="button"
         disabled={ checkIgredients() }
+        onClick={ () => history.push('/done-recipes') }
       >
         Finish recipe!
       </button>
