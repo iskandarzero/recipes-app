@@ -48,7 +48,6 @@ function App() {
           path="/explore/drinks/ingredients"
           component={ ExploreDrinksIngredients }
         />
-        <Route exact path="/done-recipes" component={ DoneRecipes } />
         <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
       </Switch>
     </RecipesProvider>
