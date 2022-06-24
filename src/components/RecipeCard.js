@@ -7,7 +7,7 @@ function RecipeCard() {
   const location = useLocation();
   let filteredRecipes = [];
   const maxRecipes = 12;
-  if (filteredResults.length > 0) {
+  if (filteredResults && filteredResults.length > 0) {
     filteredRecipes = filteredResults.slice(0, maxRecipes);
   } else if (searchResults.length > 0) {
     filteredRecipes = searchResults.slice(0, maxRecipes);
