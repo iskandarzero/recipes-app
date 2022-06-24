@@ -18,11 +18,13 @@ function Profile() {
     history.push('/');
   };
 
+  console.log(user);
+
   return (
     <div>
       <Header title="Profile" search={ false } />
       <div data-testid="profile-email">
-        {user.email}
+        {user && user.email}
       </div>
 
       <form>
