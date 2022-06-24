@@ -17,7 +17,11 @@ function RecipeCard() {
     <main>
       {filteredRecipes.length > 0 && filteredRecipes.map((recipe, index) => (
         <div data-testid={ `${index}-recipe-card` } key={ index }>
-          <Link to={ `${location.pathname}/${recipe.idMeal || recipe.idDrink}` }>
+          <Link
+            to={ location.pathname.includes('nationalities')
+              ? `/foods/${recipe.idMeal}`
+              : `${location.pathname}/${recipe.idMeal || recipe.idDrink}` }
+          >
             <img
               data-testid={ `${index}-card-img` }
               src={ recipe.strMealThumb || recipe.strDrinkThumb }
