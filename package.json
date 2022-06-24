@@ -23,7 +23,7 @@
     "react-logger": "^1.1.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "5.0.0",
-    "sass": "^1.52.3",
+    "sass": "^1.53.0",
     "websocket-extensions": ">=0.1.4"
   },
   "scripts": {
