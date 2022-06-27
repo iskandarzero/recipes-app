@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { Compass, Martini, CookingPot } from 'phosphor-react';
 import drinkIcon from '../../images/drinkIcon.svg';
 import exploreIcon from '../../images/exploreIcon.svg';
 import mealIcon from '../../images/mealIcon.svg';
@@ -9,14 +10,14 @@ function Footer() {
   const history = useHistory();
 
   return (
-    <footer className="footer" data-testid="footer">
+    <footer id="footer" data-testid="footer">
       <button
         type="button"
         data-testid="drinks-bottom-btn"
         src={ drinkIcon }
         onClick={ () => history.push('/drinks') }
       >
-        <img src={ drinkIcon } alt="mealIcon" />
+        <Martini size={ 40 } />
       </button>
       <button
         type="button"
@@ -24,7 +25,7 @@ function Footer() {
         onClick={ () => history.push('/explore') }
         src={ exploreIcon }
       >
-        <img src={ exploreIcon } alt="exploreIcon" />
+        <Compass size={ 40 } />
       </button>
       <button
         type="button"
@@ -32,7 +33,7 @@ function Footer() {
         onClick={ () => history.push('/foods') }
         src={ mealIcon }
       >
-        <img src={ mealIcon } alt="foodIcon" />
+        <CookingPot size={ 40 } />
       </button>
     </footer>
   );
