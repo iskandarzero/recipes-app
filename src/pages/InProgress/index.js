@@ -137,17 +137,17 @@ function InProgress({ match: { params: { id } } }) {
       <h3 data-testid="recipe-category">{recipe.strCategory}</h3>
       {ingredients.map((ingredient, index) => (recipe[ingredient] && (
         <div key={ index } className="recipe-inputs">
-          <input
-            type="checkbox"
-            id={ ingredient }
-            onChange={ () => saveIngredient(ingredient) }
-            checked={ checkboxChecked(ingredient) }
-          />
           <label
             data-testid={ `${index}-ingredient-step` }
             htmlFor={ ingredient }
           >
-            {recipe[ingredient]}
+            <input
+              type="checkbox"
+              id={ ingredient }
+              onChange={ () => saveIngredient(ingredient) }
+              checked={ checkboxChecked(ingredient) }
+            />
+            <span>{recipe[ingredient]}</span>
           </label>
         </div>)))}
       <h3>Recipe</h3>
