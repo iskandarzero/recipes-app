@@ -22,7 +22,7 @@ function Login() {
     <main id="login">
       <div id="logo">
         <img src={ cooking } alt="logo" />
-        <h1>Placeholder</h1>
+        <h1>Recipe App</h1>
       </div>
       <input
         data-testid="email-input"

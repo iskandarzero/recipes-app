@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { RecipesContext } from '../context/RecipesContext';
-import { foodApi } from '../services/foodAndDrinkApi';
+import { RecipesContext } from '../../context/RecipesContext';
+import { foodApi } from '../../services/foodAndDrinkApi';
+import './styles.scss';
 
 function NacionalityCard() {
   const [nacionalities, setNacionalities] = useState([]);
@@ -30,6 +31,7 @@ function NacionalityCard() {
 
   return (
     <select
+      id="nacionality-input"
       data-testid="explore-by-nationality-dropdown"
       onChange={ ({ target }) => teste(target.value) }
     >

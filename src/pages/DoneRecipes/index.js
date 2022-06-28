@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
-import shareIcon from '../images/shareIcon.svg';
+import Header from '../../components/Header';
+import shareIcon from '../../images/shareIcon.svg';
+import './styles.scss';
 // import PropTypes from 'prop-types';
 
 function DoneRecipes() {
@@ -53,10 +54,10 @@ function DoneRecipes() {
           Drinks
         </button>
       </header>
-      <main>
+      <main id="done-recipes-grid">
         {recipesFilted && recipesFilted
           .map((recipe, index) => (
-            <div key={ index }>
+            <div key={ index } className="done-recipes-card">
               <Link to={ `/${recipe.type}s/${recipe.id}` }>
                 <img
                   data-testid={ `${index}-horizontal-image` }

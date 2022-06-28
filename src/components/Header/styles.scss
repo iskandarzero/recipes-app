@@ -2,11 +2,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  justify-items: center;
   flex-direction: column;
   gap: 5px;
+  background: white;
+  border-radius: 5px;
 
   header {
-    background: white;
     display: flex;
     justify-content: space-between;
     padding: 10px 20px;
@@ -20,7 +22,8 @@
     }
   
     h1 {
-      justify-self: center;
+      text-align: center;
+      margin-inline: 10px;
     }
   
     p {
