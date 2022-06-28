@@ -69,16 +69,14 @@ function DoneRecipes() {
               </Link>
               { recipe.alcoholicOrNot.length !== 0 && (
                 <p data-testid={ `${index}-horizontal-top-text` }>
-                  alcoholic or not:
                   {recipe.alcoholicOrNot}
                 </p>)}
               <p data-testid={ `${index}-horizontal-top-text` }>
-                {recipe.nationality !== '' && `${recipe.nationality} - `}
+                {recipe.nationality ? `${recipe.nationality} - ` : ''}
                 {recipe.category}
               </p>
               <p data-testid={ `${index}-horizontal-done-date` }>
-                done date:
-                {recipe.doneDate}
+                {`Done date: ${recipe.doneDate}`}
               </p>
               <button
                 id="share-btn"

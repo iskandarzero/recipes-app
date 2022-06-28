@@ -1,9 +1,9 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import FoodDetail from '../components/FoodDetail';
-import DrinkDetail from '../components/DrinkDetail';
-import DrinkRecomendation from '../components/DrinkRecomendation';
-import FoodRecomendation from '../components/FoodRecomendation';
+import FoodDetail from '../../components/FoodDetail';
+import DrinkDetail from '../../components/DrinkDetail';
+import DrinkRecomendation from '../../components/DrinkRecomendation';
+import FoodRecomendation from '../../components/FoodRecomendation';
 
 function Recipe() {
   const { pathname } = useLocation();

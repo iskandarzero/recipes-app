@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { RecipesContext } from '../context/RecipesContext';
+import { RecipesContext } from '../../context/RecipesContext';
+import './styles.scss';
 
 function RecipeCard() {
   const { searchResults, filteredResults } = useContext(RecipesContext);
@@ -14,9 +15,9 @@ function RecipeCard() {
   }
 
   return (
-    <main>
+    <main id="recipe-grid">
       {filteredRecipes.length > 0 && filteredRecipes.map((recipe, index) => (
-        <div data-testid={ `${index}-recipe-card` } key={ index }>
+        <div data-testid={ `${index}-recipe-card` } key={ index } className="recipe-card">
           <Link
             to={ location.pathname.includes('nationalities')
               ? `/foods/${recipe.idMeal}`

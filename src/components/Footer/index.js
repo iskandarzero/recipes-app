@@ -18,6 +18,7 @@ function Footer() {
         onClick={ () => history.push('/drinks') }
       >
         <Martini size={ 40 } />
+        <p>Drinks</p>
       </button>
       <button
         type="button"
@@ -26,6 +27,7 @@ function Footer() {
         src={ exploreIcon }
       >
         <Compass size={ 40 } />
+        <p>Explore</p>
       </button>
       <button
         type="button"
@@ -34,6 +36,7 @@ function Footer() {
         src={ mealIcon }
       >
         <CookingPot size={ 40 } />
+        <p>Foods</p>
       </button>
     </footer>
   );
