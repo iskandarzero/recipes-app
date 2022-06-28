@@ -74,5 +74,5 @@ function FavoriteBtn({ recipe }) {
 export default FavoriteBtn;
 
 FavoriteBtn.propTypes = {
-  recipe: PropTypes.arrayOf.isRequired,
+  recipe: PropTypes.shape.isRequired,
 };

@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { categoryApi, fetchByCategory } from '../services/categoryApi';
-import { RecipesContext } from '../context/RecipesContext';
+import { categoryApi, fetchByCategory } from '../../services/categoryApi';
+import { RecipesContext } from '../../context/RecipesContext';
+import './styles.scss';
 
 function FilterButtons({ page }) {
   const [categoryArr, setCategoryArr] = useState([]);
@@ -40,9 +41,10 @@ function FilterButtons({ page }) {
   };
 
   return categoryArr.length > 0 && (
-    <div>
+    <div id="filter-grid">
       {categoryArr.map((category, i) => (
         <button
+          className="filter-button"
           data-testid={ `${category.strCategory}-category-filter` }
           type="button"
           key={ i }
@@ -53,6 +55,7 @@ function FilterButtons({ page }) {
         </button>
       ))}
       <button
+        className="filter-button"
         data-testid="All-category-filter"
         type="button"
         onClick={ () => setFilteredResults([]) }

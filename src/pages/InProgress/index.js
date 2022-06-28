@@ -122,6 +122,28 @@ function InProgress({ match: { params: { id } } }) {
     return false;
   };
 
+  const handleFinishRecipeBtn = () => {
+    const dataSize = 15;
+    const doneRecipe = {
+      id: recipe.idMeal || recipe.idDrink,
+      type: recipe.idMeal ? 'food' : 'drink',
+      nationality: recipe.strArea,
+      category: recipe.strCategory,
+      alcoholicOrNot: recipe.idMeal ? '' : recipe.strAlcoholic,
+      name: recipe.strMeal || recipe.strDrink,
+      image: recipe.strMealThumb || recipe.strDrinkThumb,
+      doneDate: Date().slice(0, dataSize),
+      tags: [],
+    };
+    if (localStorage.getItem('doneRecipes') === null) {
+      localStorage.setItem('doneRecipes', JSON.stringify([doneRecipe]));
+    } else {
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, doneRecipe]));
+    }
+    history.push('/done-recipes');
+  };
+
   return (
     <div id="in-progress">
       <div id="image-container">
@@ -137,17 +159,17 @@ function InProgress({ match: { params: { id } } }) {
       <h3 data-testid="recipe-category">{recipe.strCategory}</h3>
       {ingredients.map((ingredient, index) => (recipe[ingredient] && (
         <div key={ index } className="recipe-inputs">
-          <input
-            type="checkbox"
-            id={ ingredient }
-            onChange={ () => saveIngredient(ingredient) }
-            checked={ checkboxChecked(ingredient) }
-          />
           <label
             data-testid={ `${index}-ingredient-step` }
             htmlFor={ ingredient }
           >
-            {recipe[ingredient]}
+            <input
+              type="checkbox"
+              id={ ingredient }
+              onChange={ () => saveIngredient(ingredient) }
+              checked={ checkboxChecked(ingredient) }
+            />
+            <span>{recipe[ingredient]}</span>
           </label>
         </div>)))}
       <h3>Recipe</h3>
@@ -157,7 +179,7 @@ function InProgress({ match: { params: { id } } }) {
         data-testid="finish-recipe-btn"
         type="button"
         disabled={ checkIgredients() }
-        onClick={ () => history.push('/done-recipes') }
+        onClick={ handleFinishRecipeBtn }
       >
         Finish recipe!
       </button>

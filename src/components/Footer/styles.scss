@@ -1,5 +1,15 @@
-.footer {
+#footer {
   bottom: 0;
   position: fixed;
+  display: flex;
+  justify-content: space-around;
+  width: min(100vw, 600px);
+  background-color: white;
+  padding: 10px 20px;
+
+  button {
+    border: none;
+    background: none;
+  }
 }
 

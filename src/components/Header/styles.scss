@@ -1,0 +1,31 @@
+#header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 5px;
+
+  header {
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    align-items: center;
+    align-items: center;
+    width: 100%;
+  
+    button {
+      border: none;
+      background: none;
+    }
+  
+    h1 {
+      justify-self: center;
+    }
+  
+    p {
+      color: white;
+    }
+
+  }
+} 
