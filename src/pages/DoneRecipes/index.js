@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../../components/Header';
 import { Export } from 'phosphor-react';
+import Header from '../../components/Header';
 import shareIcon from '../../images/shareIcon.svg';
 import './styles.scss';
 // import PropTypes from 'prop-types';
@@ -31,30 +31,30 @@ function DoneRecipes() {
 
   return (
     <>
-        <Header title="Done Recipes" search={ false } />
-        <header id="done-recipe-header">
-          <button
-            type="button"
-            data-testid="filter-by-all-btn"
-            onClick={ () => filterRecipes('all') }
-          >
-            All
-          </button>
-          <button
-            type="button"
-            data-testid="filter-by-food-btn"
-            onClick={ () => filterRecipes('food') }
-          >
-            Foods
-          </button>
-          <button
-            type="button"
-            data-testid="filter-by-drink-btn"
-            onClick={ () => filterRecipes('drink') }
-          >
-            Drinks
-          </button>
-        </header>
+      <Header title="Done Recipes" search={ false } />
+      <header id="done-recipe-header">
+        <button
+          type="button"
+          data-testid="filter-by-all-btn"
+          onClick={ () => filterRecipes('all') }
+        >
+          All
+        </button>
+        <button
+          type="button"
+          data-testid="filter-by-food-btn"
+          onClick={ () => filterRecipes('food') }
+        >
+          Foods
+        </button>
+        <button
+          type="button"
+          data-testid="filter-by-drink-btn"
+          onClick={ () => filterRecipes('drink') }
+        >
+          Drinks
+        </button>
+      </header>
       <main id="done-recipes-grid">
         {recipesFilted && recipesFilted
           .map((recipe, index) => (
@@ -88,7 +88,7 @@ function DoneRecipes() {
                 data-testid={ `${index}-horizontal-share-btn` }
               >
                 <Export size={ 25 } color="#7A7AC7" alt="share icon" />
-              
+
               </button>
               {copySucess && <p>Link copied!</p>}
               {
