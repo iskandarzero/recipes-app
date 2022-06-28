@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
+import { Export } from 'phosphor-react';
 import shareIcon from '../../images/shareIcon.svg';
 import './styles.scss';
 // import PropTypes from 'prop-types';
@@ -30,30 +31,30 @@ function DoneRecipes() {
 
   return (
     <>
-      <header>
         <Header title="Done Recipes" search={ false } />
-        <button
-          type="button"
-          data-testid="filter-by-all-btn"
-          onClick={ () => filterRecipes('all') }
-        >
-          All
-        </button>
-        <button
-          type="button"
-          data-testid="filter-by-food-btn"
-          onClick={ () => filterRecipes('food') }
-        >
-          Food
-        </button>
-        <button
-          type="button"
-          data-testid="filter-by-drink-btn"
-          onClick={ () => filterRecipes('drink') }
-        >
-          Drinks
-        </button>
-      </header>
+        <header id="done-recipe-header">
+          <button
+            type="button"
+            data-testid="filter-by-all-btn"
+            onClick={ () => filterRecipes('all') }
+          >
+            All
+          </button>
+          <button
+            type="button"
+            data-testid="filter-by-food-btn"
+            onClick={ () => filterRecipes('food') }
+          >
+            Foods
+          </button>
+          <button
+            type="button"
+            data-testid="filter-by-drink-btn"
+            onClick={ () => filterRecipes('drink') }
+          >
+            Drinks
+          </button>
+        </header>
       <main id="done-recipes-grid">
         {recipesFilted && recipesFilted
           .map((recipe, index) => (
@@ -66,7 +67,7 @@ function DoneRecipes() {
                 />
               </Link>
               <Link to={ `/${recipe.type}s/${recipe.id}` }>
-                <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
+                <h3 data-testid={ `${index}-horizontal-name` }>{recipe.name}</h3>
               </Link>
               { recipe.alcoholicOrNot.length !== 0 && (
                 <p data-testid={ `${index}-horizontal-top-text` }>
@@ -77,7 +78,7 @@ function DoneRecipes() {
                 {recipe.category}
               </p>
               <p data-testid={ `${index}-horizontal-done-date` }>
-                {`Done date: ${recipe.doneDate}`}
+                {`${recipe.doneDate}`}
               </p>
               <button
                 id="share-btn"
@@ -86,10 +87,8 @@ function DoneRecipes() {
                 onClick={ () => copiarTexto(recipe.type, recipe.id) }
                 data-testid={ `${index}-horizontal-share-btn` }
               >
-                <img
-                  src={ shareIcon }
-                  alt={ recipe.name }
-                />
+                <Export size={ 25 } color="#7A7AC7" alt="share icon" />
+              
               </button>
               {copySucess && <p>Link copied!</p>}
               {
