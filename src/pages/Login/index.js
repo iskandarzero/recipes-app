@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import cooking from '../../images/cooking.png';
+import './styles.scss';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -17,28 +19,37 @@ function Login() {
   }
 
   return (
-    <main>
+    <main id="login">
+      <div id="logo">
+        <img src={ cooking } alt="logo" />
+        <h1>Placeholder</h1>
+      </div>
       <input
         data-testid="email-input"
+        className="input"
+        id="email"
         type="text"
-        placeholder="email"
+        placeholder="Email"
         value={ email }
         onChange={ (e) => setEmail(e.target.value) }
       />
       <input
         data-testid="password-input"
+        className="input"
+        id="password"
         type="password"
-        placeholder="senha"
+        placeholder="Password"
         value={ password }
         onChange={ (e) => setPassword(e.target.value) }
       />
       <button
         data-testid="login-submit-btn"
         type="button"
+        id="loginBtn"
         disabled={ !(password.length > minPassword && regex.test(email)) }
         onClick={ btnSubmit }
       >
-        Enter
+        Login
       </button>
     </main>
 

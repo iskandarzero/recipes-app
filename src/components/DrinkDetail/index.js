@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import '../styles/detail.scss';
 import { useHistory } from 'react-router-dom';
-import ShareButton from './ShareBtn';
-import FavoriteBtn from './FavoriteBtn';
+import ShareButton from '../ShareBtn';
+import FavoriteBtn from '../FavoriteBtn';
+import './styles.scss';
 
 function DrinkDetail({ id }) {
   const [drinks, setDrinks] = useState([]);
@@ -24,6 +24,7 @@ function DrinkDetail({ id }) {
     if (drinks[0]) {
       return Object.entries(drinks[0])
         .filter((attr) => attr[0].includes('trIngredient') && attr[1] !== null)
+        .filter((attr2) => attr2[1] !== '')
         .map((ingredient) => ingredient[1]);
     }
   }
@@ -32,6 +33,7 @@ function DrinkDetail({ id }) {
     if (drinks[0]) {
       return Object.entries(drinks[0])
         .filter((attr) => attr[0].includes('strMeasure') && attr[1] !== null)
+        .filter((attr2) => attr2[1] !== '')
         .map((mesure) => mesure[1]);
     }
   }
@@ -59,28 +61,34 @@ function DrinkDetail({ id }) {
   const recipeInProgress = isRecipeInProgress();
 
   return (
-    <div id="detail-page">
+    <div id="drink-detail-page">
+
       { drinks.map((drink) => (
         <div key={ drink.idDrink }>
-          <img
-            data-testid="recipe-photo"
-            src={ drink.strDrinkThumb }
-            alt={ drink.strDrink }
-          />
+          <div id="image-container">
+            <img
+              className="main-image"
+              data-testid="recipe-photo"
+              src={ drink.strDrinkThumb }
+              alt={ drink.strDrink }
+            />
+            { drinks.length > 0 && <FavoriteBtn recipe={ drinks[0] } /> }
+            <ShareButton />
+          </div>
+
           <h1 data-testid="recipe-title">{ drink.strDrink }</h1>
-          <ShareButton />
-          { drinks.length > 0 && <FavoriteBtn recipe={ drinks[0] } /> }
-          <p data-testid="recipe-category">{ drink.strAlcoholic }</p>
+          <h3 data-testid="recipe-category">{ drink.strAlcoholic }</h3>
           <div>
             { ingredients.map((ingredient, index) => (
               <p
                 data-testid={ `${index}-ingredient-name-and-measure` }
                 key={ ingredient }
               >
-                {`${ingredient} ${mesures[index] ? mesures[index] : ''}`}
+                {`${index + 1} - ${ingredient} ${mesures[index] ? mesures[index] : ''}`}
               </p>
             )) }
           </div>
+          <h3>Recipe</h3>
           <p data-testid="instructions">{drink.strInstructions}</p>
         </div>
       ))}

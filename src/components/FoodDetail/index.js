@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import '../styles/detail.scss';
 import { useHistory } from 'react-router-dom';
-import ShareButton from './ShareBtn';
-import FavoriteBtn from './FavoriteBtn';
+import ShareButton from '../ShareBtn';
+import FavoriteBtn from '../FavoriteBtn';
+import './styles.scss';
 
 function FoodDetail({ id }) {
   const [foods, setFoods] = useState([]);
@@ -24,6 +24,7 @@ function FoodDetail({ id }) {
     if (foods[0]) {
       return Object.entries(foods[0])
         .filter((attr) => attr[0].includes('trIngredient') && attr[1] !== null)
+        .filter((attr2) => attr2[1] !== '')
         .map((ingredient) => ingredient[1]);
     }
   }
@@ -32,6 +33,7 @@ function FoodDetail({ id }) {
     if (foods[0]) {
       return Object.entries(foods[0])
         .filter((attr) => attr[0].includes('strMeasure') && attr[1] !== null)
+        .filter((attr2) => attr2[1] !== '')
         .map((mesure) => mesure[1]);
     }
   }
@@ -59,29 +61,33 @@ function FoodDetail({ id }) {
   const recipeInProgress = isRecipeInProgress();
 
   return (
-    <div id="detail-page">
+    <div id="food-detail-page">
       { foods.map((food) => (
         <div key={ food.idMeal }>
-          <img
-            data-testid="recipe-photo"
-            src={ food.strMealThumb }
-            alt={ food.strMeal }
-          />
+          <div id="image-container">
+            <img
+              className="main-image"
+              data-testid="recipe-photo"
+              src={ food.strMealThumb }
+              alt={ food.strMeal }
+            />
+            { foods.length > 0 && <FavoriteBtn recipe={ foods[0] } /> }
+            <ShareButton />
+          </div>
+
           <h1 data-testid="recipe-title">{ food.strMeal }</h1>
-          <ShareButton />
-          { foods.length > 0 && <FavoriteBtn recipe={ foods[0] } /> }
-          <p data-testid="recipe-category">{ food.strCategory }</p>
+          <h3 data-testid="recipe-category">{ food.strCategory }</h3>
           <div>
             { ingredients.map((ingredient, index) => (
               <p data-testid={ `${index}-ingredient-name-and-measure` } key={ index }>
-                {`${ingredient} ${mesures[index] ? mesures[index] : ''}`}
+                {`${index + 1} - ${ingredient} ${mesures[index] ? mesures[index] : ''}`}
               </p>
             )) }
           </div>
+          <h3>Recipe</h3>
           <p data-testid="instructions">{food.strInstructions}</p>
           <iframe
             data-testid="video"
-            width="450"
             height="290"
             src={ `https://www.youtube.com/embed/${food.strYoutube.split('?v=').pop()}` }
             title="YouTube video player"

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router-dom';
-import FavoriteBtn from '../components/FavoriteBtn';
-import ShareBtn from '../components/ShareBtn';
+import FavoriteBtn from '../../components/FavoriteBtn';
+import ShareBtn from '../../components/ShareBtn';
+import './styles.scss';
 
 function InProgress({ match: { params: { id } } }) {
   const location = useLocation();
@@ -122,33 +123,37 @@ function InProgress({ match: { params: { id } } }) {
   };
 
   return (
-    <main>
-      <h2 data-testid="recipe-title">{ recipe.strMeal || recipe.strDrink}</h2>
-      <img
-        data-testid="recipe-photo"
-        src={ recipe.strMealThumb || recipe.strDrinkThumb }
-        alt={ recipe.strMeal || recipe.strDrink }
-      />
-      <ShareBtn />
-      <FavoriteBtn recipe={ recipe } />
-      <p data-testid="recipe-category">{recipe.strCategory}</p>
+    <div id="in-progress">
+      <div id="image-container">
+        <img
+          data-testid="recipe-photo"
+          src={ recipe.strMealThumb || recipe.strDrinkThumb }
+          alt={ recipe.strMeal || recipe.strDrink }
+        />
+        <FavoriteBtn recipe={ recipe } />
+        <ShareBtn />
+      </div>
+      <h1 data-testid="recipe-title">{ recipe.strMeal || recipe.strDrink}</h1>
+      <h3 data-testid="recipe-category">{recipe.strCategory}</h3>
       {ingredients.map((ingredient, index) => (recipe[ingredient] && (
-        <div key={ index }>
+        <div key={ index } className="recipe-inputs">
+          <input
+            type="checkbox"
+            id={ ingredient }
+            onChange={ () => saveIngredient(ingredient) }
+            checked={ checkboxChecked(ingredient) }
+          />
           <label
             data-testid={ `${index}-ingredient-step` }
             htmlFor={ ingredient }
           >
-            <input
-              type="checkbox"
-              id={ ingredient }
-              onChange={ () => saveIngredient(ingredient) }
-              checked={ checkboxChecked(ingredient) }
-            />
             {recipe[ingredient]}
           </label>
         </div>)))}
-      <p data-testid="instructions">{recipe.strInstructions}</p>
+      <h3>Recipe</h3>
+      <p id="instructions" data-testid="instructions">{recipe.strInstructions}</p>
       <button
+        id="finish-btn"
         data-testid="finish-recipe-btn"
         type="button"
         disabled={ checkIgredients() }
@@ -156,7 +161,7 @@ function InProgress({ match: { params: { id } } }) {
       >
         Finish recipe!
       </button>
-    </main>
+    </div>
   );
 }
 

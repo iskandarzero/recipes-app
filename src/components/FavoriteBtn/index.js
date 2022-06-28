@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import whiteHeart from '../images/whiteHeartIcon.svg';
-import blackHeart from '../images/blackHeartIcon.svg';
+import { Heart } from 'phosphor-react';
+import './styles.scss';
+import whiteHeart from '../../images/whiteHeartIcon.svg';
+import blackHeart from '../../images/blackHeartIcon.svg';
 
 function FavoriteBtn({ recipe }) {
   const [favorite, setFavorite] = useState(false);
@@ -42,7 +44,7 @@ function FavoriteBtn({ recipe }) {
   }
 
   return (
-    <div>
+    <div id="favorite-btn">
       {!favorite && (
         <button
           data-testid="favorite-btn"
@@ -50,7 +52,7 @@ function FavoriteBtn({ recipe }) {
           src={ whiteHeart }
           onClick={ addFavorite }
         >
-          <img src={ whiteHeart } alt="white heart icon" />
+          <Heart size={ 40 } color="#7A7AC7" alt="white heart icon" />
         </button>
       )}
 
@@ -61,7 +63,8 @@ function FavoriteBtn({ recipe }) {
           src={ blackHeart }
           onClick={ deleteFavorite }
         >
-          <img src={ blackHeart } alt="black heart icon" />
+          <Heart size={ 40 } color="#7A7AC7" weight="fill" alt="purple heart icon" />
+
         </button>
       )}
     </div>
