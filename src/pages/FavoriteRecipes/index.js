@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
-import UnfavoriteBtn from '../components/UnfavoriteBtn';
-import shareIcon from '../images/shareIcon.svg';
+import Header from '../../components/Header';
+import UnfavoriteBtn from '../../components/UnfavoriteBtn';
+import shareIcon from '../../images/shareIcon.svg';
+import './styles.scss';
 
 function FavoriteRecipes() {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
@@ -30,9 +31,9 @@ function FavoriteRecipes() {
   }
 
   return (
-    <div>
+    <div id="favorite-recipes">
       <Header title="Favorite Recipes" search={ false } />
-      <header>
+      <header id="favorite-recipe-filter">
         <button
           type="button"
           data-testid="filter-by-all-btn"

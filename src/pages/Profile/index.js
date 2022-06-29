@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
+import Footer from '../../components/Footer';
+import Header from '../../components/Header';
+import './styles.scss';
 
 function Profile() {
   const [user, setUser] = useState('');
@@ -21,13 +22,13 @@ function Profile() {
   console.log(user);
 
   return (
-    <div>
+    <div id="profile-page">
       <Header title="Profile" search={ false } />
-      <div data-testid="profile-email">
-        {user && user.email}
-      </div>
 
       <form>
+        <div data-testid="profile-email">
+          {user && user.email}
+        </div>
 
         <button
           data-testid="profile-done-btn"

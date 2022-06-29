@@ -1,0 +1,25 @@
+#explore-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    margin-top: 50px;
+
+    button {
+      background: rgba(122, 122, 199, 1);
+      color: rgba(255, 255, 255, 1);
+      text-transform: uppercase;
+      width: 80%;
+      font-weight: 700;
+      padding: 20px 10px;
+      border-radius: 10px;
+      font-size: 18px;
+      border: none;
+    }
+  }
+}

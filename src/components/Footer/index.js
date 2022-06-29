@@ -13,6 +13,15 @@ function Footer() {
     <footer id="footer" data-testid="footer">
       <button
         type="button"
+        data-testid="food-bottom-btn"
+        onClick={ () => history.push('foods') }
+        src={ mealIcon }
+      >
+        <CookingPot size={ 32 } />
+        <p>Foods</p>
+      </button>
+      <button
+        type="button"
         data-testid="drinks-bottom-btn"
         src={ drinkIcon }
         onClick={ () => history.push('/drinks') }
@@ -29,15 +38,7 @@ function Footer() {
         <Compass size={ 32 } />
         <p>Explore</p>
       </button>
-      <button
-        type="button"
-        data-testid="food-bottom-btn"
-        onClick={ () => history.push('/foods') }
-        src={ mealIcon }
-      >
-        <CookingPot size={ 32 } />
-        <p>Foods</p>
-      </button>
+
     </footer>
   );
 }
