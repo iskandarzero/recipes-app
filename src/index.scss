@@ -4,13 +4,17 @@
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
 }
-
 body {
-  width: min(600px, 100vw);
+  background: rgba(122, 122, 199, 1);
+}
+#root {
+  width: min(451px, 100vw);
   margin: auto;
+  height: max(100vh, 100%);
   word-wrap: break-word;
-  background: rgba(243, 245, 246, 1)
-  ;
+  background: rgba(243, 245, 246, 1);
+  border: rgb(202, 201, 201) 1px solid;
+  border-radius: 5px;
 }
 
 img {
