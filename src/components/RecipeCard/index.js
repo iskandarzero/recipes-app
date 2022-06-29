@@ -17,24 +17,24 @@ function RecipeCard() {
   return (
     <main id="recipe-grid">
       {filteredRecipes.length > 0 && filteredRecipes.map((recipe, index) => (
-        <div data-testid={ `${index}-recipe-card` } key={ index } className="recipe-card">
-          <Link
-            to={ location.pathname.includes('nationalities')
-              ? `/foods/${recipe.idMeal}`
-              : `${location.pathname}/${recipe.idMeal || recipe.idDrink}` }
+        <Link
+          key={ index }
+          data-testid={ `${index}-recipe-card` }
+          to={ location.pathname.includes('nationalities')
+            ? `/foods/${recipe.idMeal}`
+            : `${location.pathname}/${recipe.idMeal || recipe.idDrink}` }
+        >
+          <img
+            data-testid={ `${index}-card-img` }
+            src={ recipe.strMealThumb || recipe.strDrinkThumb }
+            alt={ recipe.strMeal || recipe.strDrink }
+          />
+          <h3
+            data-testid={ `${index}-card-name` }
           >
-            <img
-              data-testid={ `${index}-card-img` }
-              src={ recipe.strMealThumb || recipe.strDrinkThumb }
-              alt={ recipe.strMeal || recipe.strDrink }
-            />
-            <h3
-              data-testid={ `${index}-card-name` }
-            >
-              {recipe.strMeal || recipe.strDrink}
-            </h3>
-          </Link>
-        </div>
+            {recipe.strMeal || recipe.strDrink}
+          </h3>
+        </Link>
       ))}
     </main>
   );
