@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import blackHeart from '../images/blackHeartIcon.svg';
+import { Heart } from 'phosphor-react';
+import blackHeart from '../../images/blackHeartIcon.svg';
+import './styles.scss';
 
 function UnfavoriteBtn({ id, reload, index }) {
   const [favorite, setFavorite] = useState(true);
@@ -24,7 +26,7 @@ function UnfavoriteBtn({ id, reload, index }) {
   }
 
   return (
-    <div>
+    <div id="unfavorite-btn">
       {favorite && (
         <button
           data-testid={ `${index}-horizontal-favorite-btn` }
@@ -32,7 +34,7 @@ function UnfavoriteBtn({ id, reload, index }) {
           src={ blackHeart }
           onClick={ deleteFavorite }
         >
-          <img src={ blackHeart } alt="black heart icon" />
+          <Heart size={ 40 } color="#7A7AC7" weight="fill" alt="purple heart icon" />
         </button>
       )}
     </div>

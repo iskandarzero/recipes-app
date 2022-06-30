@@ -1,0 +1,22 @@
+#favorite-recipes {
+  #favorite-recipe-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    justify-content: center;
+    flex: auto;
+    margin-block: 10px;
+
+    button {
+      text-transform: uppercase;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      background: #7a7ac7;
+      font-size: 16px;
+      line-height: 19.5px;
+      padding: 5px 15px;
+      font-weight: 600;
+    }
+  }
+}

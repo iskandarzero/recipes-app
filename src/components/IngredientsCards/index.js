@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { RecipesContext } from '../context/RecipesContext';
-import { drinkApi, foodApi } from '../services/foodAndDrinkApi';
+import { RecipesContext } from '../../context/RecipesContext';
+import { drinkApi, foodApi } from '../../services/foodAndDrinkApi';
+import './styles.scss';
 
 function IngredientsCards({ param }) {
   const [ingredients, setIngredients] = useState([]);
@@ -32,9 +33,10 @@ function IngredientsCards({ param }) {
   };
 
   return (
-    <div>
+    <div id="ingredient-grid">
       {ingredients.length > 0 && ingredients.map((ingredient, index) => (
         <Link
+          className="ingredient-card"
           data-testid={ `${index}-ingredient-card` }
           key={ index }
           onClick={ () => teste(ingredient.strIngredient || ingredient.strIngredient1) }

@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { foodApi, drinkApi } from '../services/foodAndDrinkApi';
-import { RecipesContext } from '../context/RecipesContext';
+import { foodApi, drinkApi } from '../../services/foodAndDrinkApi';
+import { RecipesContext } from '../../context/RecipesContext';
+import './styles.scss';
 
 function SearchBar() {
   const [searchParam, setSearchParam] = useState('');
@@ -44,7 +45,7 @@ function SearchBar() {
   };
 
   return (
-    <section>
+    <section id="search-bar">
       <input
         type="text"
         data-testid="search-input"
@@ -52,7 +53,7 @@ function SearchBar() {
         value={ searchValue }
         onChange={ ({ target }) => setSearchValue(target.value) }
       />
-      <div onChange={ ({ target }) => setSearchParam(target.value) }>
+      <div onChange={ ({ target }) => setSearchParam(target.value) } id="search-radio">
         <label htmlFor="ingredient-search">
           <input
             data-testid="ingredient-search-radio"

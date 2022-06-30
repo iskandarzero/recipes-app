@@ -1,0 +1,14 @@
+#nacionality-input {
+  display: flex;
+  margin: auto;
+  margin-block: 15px;
+  width: min(310px, 90vw);
+  border: 1px lightgray solid;
+  border-radius: 4px;
+  font-size: 16px;
+  padding: 10px;
+
+  &:focus {
+    outline: rgba(122, 122, 199, 1) 2px solid;
+  }
+}

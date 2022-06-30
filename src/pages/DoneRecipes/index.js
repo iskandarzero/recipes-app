@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
-import UnfavoriteBtn from '../components/UnfavoriteBtn';
-import shareIcon from '../images/shareIcon.svg';
+import { Export } from 'phosphor-react';
+import Header from '../../components/Header';
+import shareIcon from '../../images/shareIcon.svg';
+import './styles.scss';
+// import PropTypes from 'prop-types';
 
-function FavoriteRecipes() {
-  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
-  const [recipesFilter, setRecipesFilter] = useState(favoriteRecipes);
+function DoneRecipes() {
+  const [doneRecipes, setDoneRecipes] = useState([]);
+  const [recipesFilted, setRecipesFilter] = useState(doneRecipes);
   const [copySucess, setCopySucess] = useState(false);
-  const [reload, setReload] = useState(true);
-
   useEffect(() => {
-    setFavoriteRecipes(JSON.parse(localStorage.getItem('favoriteRecipes')));
-    setRecipesFilter(JSON.parse(localStorage.getItem('favoriteRecipes')));
-  }, [reload]);
+    setDoneRecipes(JSON.parse(localStorage.getItem('doneRecipes')));
+    setRecipesFilter(JSON.parse(localStorage.getItem('doneRecipes')));
+  }, []);
 
   const filterRecipes = (type) => {
-    if (type === 'all') return setRecipesFilter(favoriteRecipes);
-    setRecipesFilter(favoriteRecipes.filter((recipe) => recipe.type === type));
+    if (type === 'all') return setRecipesFilter(doneRecipes);
+    setRecipesFilter(doneRecipes.filter((recipe) => recipe.type === type));
   };
 
   function copiarTexto(type, id) {
@@ -30,9 +30,9 @@ function FavoriteRecipes() {
   }
 
   return (
-    <div>
-      <Header title="Favorite Recipes" search={ false } />
-      <header>
+    <>
+      <Header title="Done Recipes" search={ false } />
+      <header id="done-recipe-header">
         <button
           type="button"
           data-testid="filter-by-all-btn"
@@ -45,7 +45,7 @@ function FavoriteRecipes() {
           data-testid="filter-by-food-btn"
           onClick={ () => filterRecipes('food') }
         >
-          Food
+          Foods
         </button>
         <button
           type="button"
@@ -55,10 +55,10 @@ function FavoriteRecipes() {
           Drinks
         </button>
       </header>
-      <main>
-        {recipesFilter && recipesFilter
+      <main id="done-recipes-grid">
+        {recipesFilted && recipesFilted
           .map((recipe, index) => (
-            <div key={ index }>
+            <div key={ index } className="done-recipes-card">
               <Link to={ `/${recipe.type}s/${recipe.id}` }>
                 <img
                   data-testid={ `${index}-horizontal-image` }
@@ -67,16 +67,18 @@ function FavoriteRecipes() {
                 />
               </Link>
               <Link to={ `/${recipe.type}s/${recipe.id}` }>
-                <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
+                <h3 data-testid={ `${index}-horizontal-name` }>{recipe.name}</h3>
               </Link>
               { recipe.alcoholicOrNot.length !== 0 && (
                 <p data-testid={ `${index}-horizontal-top-text` }>
-                  alcoholic or not:
                   {recipe.alcoholicOrNot}
                 </p>)}
               <p data-testid={ `${index}-horizontal-top-text` }>
-                {recipe.nationality !== '' && `${recipe.nationality} - `}
+                {recipe.nationality ? `${recipe.nationality} - ` : ''}
                 {recipe.category}
+              </p>
+              <p data-testid={ `${index}-horizontal-done-date` }>
+                {`${recipe.doneDate}`}
               </p>
               <button
                 id="share-btn"
@@ -85,18 +87,28 @@ function FavoriteRecipes() {
                 onClick={ () => copiarTexto(recipe.type, recipe.id) }
                 data-testid={ `${index}-horizontal-share-btn` }
               >
-                <img
-                  src={ shareIcon }
-                  alt={ recipe.name }
-                />
+                <Export size={ 25 } color="#7A7AC7" alt="share icon" />
+
               </button>
               {copySucess && <p>Link copied!</p>}
-              <UnfavoriteBtn id={ recipe.id } reload={ setReload } index={ index } />
+              {
+                recipe.tags.length > 0 && recipe.tags
+                  .map((tag, i) => (
+                    <p
+                      key={ i }
+                      data-testid={ `${'0'}-${recipe.tags[i]}-horizontal-tag` }
+                    >
+                      {recipe.tags[i]}
+                    </p>
+                  ))
+              }
             </div>
           ))}
       </main>
-    </div>
+    </>
   );
 }
 
-export default FavoriteRecipes;
+// DoneRecipes.propTypes = {}
+
+export default DoneRecipes;
