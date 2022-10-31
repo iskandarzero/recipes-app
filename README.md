@@ -1,9 +1,8 @@
 # Recipes app :meat_on_bone:
 
-O Recipes App é um aplicativo que te dà acesso a receitas de comidas e bebidas. Como ele é possível: 
+O Recipes App é um aplicativo que te da acesso a receitas de comidas e bebidas. Com ele é possível: 
   - Buscar uma receita por nome;
-  - Explorar receitas baseada nas suas categorias;
-  - Explorar receitas por ingrediente;
+  - Explorar receitas por ingrediente ou categoria;
   - Explorar receitas por nacionalidade;
   - Salvar suas receitas favoritas;
   - Marcar o progresso das receitas.
